@@ -19,10 +19,15 @@ router.get(
 router.post(
   '/',
   wrapAsync(async (req, res, next) => {
-    let { title, description, body, image, tags } = req.body;
-    let tagsArray = tags.split(',');
-
-    let newRecipe = { title, description, body, image, tags: tagsArray };
+    let newRecipe = {
+      title: req.body.title,
+      description: req.body.description,
+      body: req.body.body,
+      image: req.body.image,
+      ingredients: req.body.ingredients,
+      instructions: req.body.instructions.split(','),
+      tags: req.body.tags.split(','),
+    };
 
     // validate req.body
     // let valid = title != '' && tagsArray;
@@ -49,21 +54,33 @@ router.get(
 );
 
 router.patch(
-  '/:articleId',
+  '/:recipeId',
   wrapAsync(async (req, res, next) => {
     let { recipeId } = req.params;
-    let { title, description, body, image, tags } = req.body;
-    let tagsArray = tags.split(',');
     let updatedRecipe = {
-      title,
-      description,
-      body,
-      image,
-      tags: tagsArray,
+      title: req.body.title,
+      description: req.body.description,
+      body: req.body.body,
+      image: req.body.image,
+      ingredients: req.body.ingredients,
+      instructions: req.body.instructions.split(','),
+      tags: req.body.tags.split(','),
     };
+
+    // validate data
 
     await recipeService.updateOne(recipeId, updatedRecipe);
     res.json({ patched: true, updatedRecipe });
+  })
+);
+
+router.delete(
+  '/:recipeId',
+  wrapAsync(async (req, res, next) => {
+    let { recipeId } = req.params;
+
+    await recipeService.deleteOne(recipeId);
+    res.json({ delete: true, recipeId });
   })
 );
 

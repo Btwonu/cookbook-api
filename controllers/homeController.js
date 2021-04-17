@@ -3,11 +3,11 @@ const { Router } = require('express');
 const router = Router();
 
 router.get('/', (req, res) => {
-  res.render('home');
+  res.json({ home: true });
 });
 
 router.get('/about', (req, res) => {
-  res.render('home/about');
+  res.json({ about: true });
 });
 
 module.exports = router;
