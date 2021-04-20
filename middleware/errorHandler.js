@@ -3,5 +3,5 @@ module.exports = (err, req, res, next) => {
   err.status = err.status || 500;
 
   console.error('Error Handler: ' + err.message);
-  res.status(err.status).json({ error: err });
+  res.status(err.status).json(err);
 };

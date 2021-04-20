@@ -1,23 +1,16 @@
 const express = require('express');
 const handlebars = require('express-handlebars');
+const cors = require('cors');
+const morgan = require('morgan');
 
 module.exports = (app) => {
-  const hbs = handlebars.create({
-    extname: 'hbs',
-    helpers: {
-      whatis: function (param) {
-        console.log('THIS IS:', param);
-      },
-    },
-  });
+  app.use(cors());
 
-  app.engine('hbs', hbs.engine);
-
-  app.set('view engine', 'hbs');
+  app.use(morgan('combined'));
 
   app.use(express.static('public'));
 
   app.use(express.urlencoded({ extended: false }));
 
-  // app.use(express.json());
+  app.use(express.json());
 };

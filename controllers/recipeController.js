@@ -7,6 +7,8 @@ const recipeService = require('../services/recipeService');
 const appError = require('../middleware/appError');
 const wrapAsync = require('../middleware/wrapAsync');
 
+const recipeSchema = require('../validation/recipeSchema');
+
 router.get(
   '/',
   wrapAsync(async (req, res, next) => {
@@ -19,24 +21,7 @@ router.get(
 router.post(
   '/',
   wrapAsync(async (req, res, next) => {
-    let newRecipe = {
-      title: req.body.title,
-      description: req.body.description,
-      body: req.body.body,
-      image: req.body.image,
-      ingredients: req.body.ingredients,
-      instructions: req.body.instructions.split(','),
-      tags: req.body.tags.split(','),
-    };
-
-    // validate req.body
-    // let valid = title != '' && tagsArray;
-
-    // if (!valid) {
-    //   throw new appError('Simulated error', 400);
-    //   return res.send('simulated error');
-    // }
-
+    let newRecipe = await recipeSchema.validate(req.body);
     let data = await recipeService.createOne(newRecipe, 'Val');
 
     res.json(data);
@@ -57,17 +42,7 @@ router.patch(
   '/:recipeId',
   wrapAsync(async (req, res, next) => {
     let { recipeId } = req.params;
-    let updatedRecipe = {
-      title: req.body.title,
-      description: req.body.description,
-      body: req.body.body,
-      image: req.body.image,
-      ingredients: req.body.ingredients,
-      instructions: req.body.instructions.split(','),
-      tags: req.body.tags.split(','),
-    };
-
-    // validate data
+    let updatedRecipe = await recipeSchema.validate(req.body);
 
     await recipeService.updateOne(recipeId, updatedRecipe);
     res.json({ patched: true, updatedRecipe });
