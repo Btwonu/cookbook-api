@@ -3,7 +3,10 @@ const cors = require('cors');
 const morgan = require('morgan');
 const session = require('express-session');
 const MongoDbStore = require('connect-mongo');
+const passport = require('passport');
 const { DB } = require('../config');
+
+require('./passport');
 
 module.exports = (app) => {
   app.use(cors());
@@ -27,4 +30,17 @@ module.exports = (app) => {
       store: MongoDbStore.create({ mongoUrl: DB.uri }),
     })
   );
+
+  app.use(passport.initialize());
+  app.use(passport.session());
+
+  app.use((req, res, next) => {
+    if (req.session && req.user) {
+      console.log('req.session:', req.session);
+      console.log('req.user:', req.user);
+      console.log(`${req.user.username} is logged in!`);
+    }
+
+    next();
+  });
 };
