@@ -16,18 +16,20 @@ router.get('/login', (req, res) => {
 });
 
 router.get('/secret', isAuth, (req, res) => {
-  res.send('You are seeing very secret');
+  res.send('You are seeing very secret, ' + req.user.username + '.');
 });
 
 router.post('/register', (req, res) => {
   let { username, password } = req.body;
   let { salt, hash } = generatePassword(password);
 
-  userService
-    .create(username, salt, hash)
-    .then((user) => console.log(`User created successfully: ${user}`));
-
-  res.json({ register: true });
+  userService.create(username, salt, hash).then((user) => {
+    console.log(`User created successfully: ${user}`);
+    req.login(user, (err) => {
+      if (err) throw err;
+      res.redirect('/');
+    });
+  });
 });
 
 router.post(
