@@ -25,6 +25,7 @@ module.exports = (app) => {
       resave: false,
       saveUninitialized: true,
       cookie: {
+        httpOnly: true,
         maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
       },
       store: MongoDbStore.create({ mongoUrl: DB.uri }),
