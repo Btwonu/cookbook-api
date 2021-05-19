@@ -15,4 +15,8 @@ router.get('/about', (req, res) => {
   res.json({ about: true });
 });
 
+router.get('/session', (req, res) => {
+  res.json(req.session);
+});
+
 module.exports = router;
