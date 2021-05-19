@@ -9,7 +9,7 @@ const { DB } = require('../config');
 require('./passport');
 
 module.exports = (app) => {
-  app.use(cors());
+  app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 
   app.use(morgan('combined'));
 

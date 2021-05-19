@@ -9,8 +9,11 @@ const wrapAsync = require('../middleware/wrapAsync');
 
 const recipeSchema = require('../validation/recipeSchema');
 
+const { isAuth } = require('../middleware/authMiddleware');
+
 router.get(
   '/',
+  isAuth,
   wrapAsync(async (req, res, next) => {
     let recipes = await recipeService.getAll();
 
