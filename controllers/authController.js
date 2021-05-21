@@ -6,9 +6,14 @@ const router = Router();
 const userService = require('../services/userService');
 const { generatePassword } = require('../utils/passwordUtils');
 const { isAuth } = require('../middleware/authMiddleware');
+const appError = require('../middleware/appError');
 
-router.get('/', (req, res) => {
-  res.json({ auth: true });
+router.get('/', (req, res, next) => {
+  if (req.user) {
+    res.json(req.user);
+  } else {
+    next(new appError('Not authorized!', 401));
+  }
 });
 
 router.get('/login', (req, res) => {

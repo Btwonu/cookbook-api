@@ -16,7 +16,13 @@ passport.deserializeUser((userId, done) => {
   userService
     .findById(userId)
     .then((user) => {
-      done(null, user);
+      // user data to be passed to req.user is defined in deserializedUser
+      const deserializedUser = {
+        id: user._id,
+        username: user.username,
+      };
+
+      done(null, deserializedUser);
     })
     .catch((err) => done(err));
 });

@@ -37,9 +37,9 @@ module.exports = (app) => {
 
   app.use((req, res, next) => {
     if (req.session && req.user) {
+      console.log(`${req.user.username} is logged in!`);
       console.log('req.session:', req.session);
       console.log('req.user:', req.user);
-      console.log(`${req.user.username} is logged in!`);
     }
 
     next();
