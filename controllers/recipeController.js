@@ -24,10 +24,13 @@ router.get(
 router.post(
   '/',
   wrapAsync(async (req, res, next) => {
-    let newRecipe = await recipeSchema.validate(req.body);
-    let data = await recipeService.createOne(newRecipe, 'Val');
+    let data = await recipeService.createOne(req.body.recipe, req.user.id);
 
-    res.json(data);
+    return res.json(data);
+    // let newRecipe = await recipeSchema.validate(req.body);
+    // let data = await recipeService.createOne(newRecipe, 'Val');
+
+    // res.json(data);
   })
 );
 
@@ -61,5 +64,12 @@ router.delete(
     res.json({ delete: true, recipeId });
   })
 );
+
+function testRecipe(recipe) {
+  console.log('===BLOCKS===');
+  recipe.blocks.forEach((block) => {
+    console.log(block);
+  });
+}
 
 module.exports = router;
