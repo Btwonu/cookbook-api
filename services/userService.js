@@ -12,8 +12,8 @@ const findById = async (userId) => {
   return User.findById(userId).lean();
 };
 
-const create = async (username, salt, hash) => {
-  let newUser = new User({ username, salt, hash });
+const create = async (username, email, salt, hash) => {
+  let newUser = new User({ username, email, salt, hash });
   return newUser.save();
 };
 

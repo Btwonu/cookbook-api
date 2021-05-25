@@ -1,10 +1,10 @@
-const appError = require('./appError');
+const AppError = require('./AppError');
 
 const isAuth = (req, res, next) => {
   if (req.isAuthenticated()) {
     next();
   } else {
-    next(new appError('You are not authorized to view this resource.', 401));
+    next(new AppError('You are not authorized to view this resource.', 401));
   }
 };
 

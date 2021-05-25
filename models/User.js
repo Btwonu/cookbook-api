@@ -1,10 +1,20 @@
 const mongoose = require('mongoose');
+const { isEmail } = require('../utils/validations');
 
 const userSchema = mongoose.Schema({
   username: {
     type: String,
     required: true,
     unique: true,
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    validate: {
+      validator: isEmail,
+      message: () => `Invalid email!`,
+    },
   },
   salt: {
     type: String,
