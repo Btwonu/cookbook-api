@@ -57,6 +57,18 @@ const recipeSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  creator: {
+    type: String,
+  },
+  header: {
+    type: String,
+  },
+  imageUrl: {
+    type: String,
+  },
+  summary: {
+    type: String,
+  },
 });
 
 const Recipe = mongoose.model('Recipe', recipeSchema);

@@ -1,8 +1,8 @@
 const Recipe = require('../models/Recipe');
 
-const createOne = (data, userId) => {
+const createOne = (data, username) => {
   console.log({ data });
-  const recipe = new Recipe({ ...data, creator: userId });
+  const recipe = new Recipe({ ...data, creator: username });
 
   return recipe.save();
 };

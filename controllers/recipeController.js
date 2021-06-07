@@ -3,6 +3,8 @@ const { Router } = require('express');
 const router = Router();
 
 const recipeService = require('../services/recipeService');
+const userService = require('../services/userService');
+const { extractRecipePresentationData } = require('../utils/recipeUtils');
 
 const appError = require('../middleware/appError');
 const wrapAsync = require('../middleware/wrapAsync');
@@ -24,7 +26,13 @@ router.get(
 router.post(
   '/',
   wrapAsync(async (req, res, next) => {
-    let data = await recipeService.createOne(req.body.recipe, req.user.id);
+    let { recipe } = req.body;
+    let { username } = await userService.findById(req.user.id);
+
+    let presentationData = extractRecipePresentationData(recipe);
+    recipe = { ...recipe, ...presentationData };
+
+    let data = await recipeService.createOne(recipe, username);
 
     return res.json(data);
     // let newRecipe = await recipeSchema.validate(req.body);
