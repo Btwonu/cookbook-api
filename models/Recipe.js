@@ -45,7 +45,18 @@ const mongoose = require('mongoose');
 // });
 
 const recipeSchema = mongoose.Schema({
-  recipe: String,
+  time: {
+    type: Number,
+    required: true,
+  },
+  blocks: {
+    type: [Object],
+    required: true,
+  },
+  version: {
+    type: String,
+    required: true,
+  },
 });
 
 const Recipe = mongoose.model('Recipe', recipeSchema);

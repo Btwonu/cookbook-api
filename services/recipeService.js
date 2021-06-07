@@ -1,7 +1,8 @@
 const Recipe = require('../models/Recipe');
 
 const createOne = (data, userId) => {
-  const recipe = new Recipe({ recipe: JSON.stringify(data), creator: userId });
+  console.log({ data });
+  const recipe = new Recipe({ ...data, creator: userId });
 
   return recipe.save();
 };
