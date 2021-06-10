@@ -5,8 +5,7 @@ const add = async (username, recipe) => {
   const user = await User.findOne({ username });
 
   let foundRecipe = user.favoriteRecipes.find((recipeRefId) => {
-    console.log(recipeRefId.equals(recipe));
-    return recipeRefId.equals(recipe);
+    return recipeRefId.equals(recipe._id);
   });
 
   // let foundRecipe = user.favoriteRecipes.includes(recipeId);
@@ -22,9 +21,12 @@ const add = async (username, recipe) => {
 const remove = async (username, recipe) => {
   const user = await User.findOne({ username });
 
-  let foundRecipeIndex = user.favoriteRecipes.findIndex((recipeRefId) =>
-    recipeRefId.equals(recipe)
-  );
+  let foundRecipeIndex = user.favoriteRecipes.findIndex((recipeRefId) => {
+    console.log({ recipeRefId });
+    console.log({ recipe });
+    console.log(recipeRefId.equals(recipe._id));
+    return recipeRefId.equals(recipe._id);
+  });
 
   if (foundRecipeIndex < 0) {
     throw new AppError('This recipe is not in favorites', 400);

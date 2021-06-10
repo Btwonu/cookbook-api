@@ -20,12 +20,18 @@ passport.deserializeUser((userId, done) => {
       let favoriteRecipes = await favoriteService.getUserFavorites(
         user.username
       );
-      console.log({ favoriteRecipes });
+
+      // filter out unneeded data before passing favoriteRecipes to user
+      let filteredFavoriteRecipes = favoriteRecipes.map((recipe) => ({
+        _id: recipe._id,
+        title: recipe.header,
+      }));
+
       // user data to be passed to req.user is defined in deserializedUser
       const deserializedUser = {
         id: user._id,
         username: user.username,
-        favoriteRecipes,
+        favoriteRecipes: filteredFavoriteRecipes,
       };
 
       done(null, deserializedUser);
