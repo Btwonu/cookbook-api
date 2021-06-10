@@ -2,6 +2,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 // const User = require('../models/User');
 const userService = require('../services/userService');
+const favoriteService = require('../services/favoriteService');
 const { validatePassword } = require('../utils/passwordUtils');
 
 const strategy = new LocalStrategy(verifyCallback);
@@ -15,12 +16,16 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser((userId, done) => {
   userService
     .findById(userId)
-    .then((user) => {
+    .then(async (user) => {
+      let favoriteRecipes = await favoriteService.getUserFavorites(
+        user.username
+      );
+      console.log({ favoriteRecipes });
       // user data to be passed to req.user is defined in deserializedUser
       const deserializedUser = {
         id: user._id,
         username: user.username,
-        favoriteRecipes: user.favoriteRecipes,
+        favoriteRecipes,
       };
 
       done(null, deserializedUser);

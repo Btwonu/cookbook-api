@@ -30,13 +30,13 @@ const userSchema = mongoose.Schema({
       ref: 'Recipe',
     },
   ],
-  favoriteRecipes: [String],
-  // favoriteRecipes: [
-  //   {
-  //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: 'Recipe',
-  //   },
-  // ],
+  // favoriteRecipes: [String],
+  favoriteRecipes: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Recipe',
+    },
+  ],
 });
 
 const User = mongoose.model('User', userSchema);
