@@ -45,17 +45,21 @@ const mongoose = require('mongoose');
 // });
 
 const recipeSchema = mongoose.Schema({
-  time: {
-    type: Number,
-    required: true,
-  },
-  blocks: {
-    type: [Object],
-    required: true,
-  },
-  version: {
-    type: String,
-    required: true,
+  editorData: {
+    type: {
+      time: {
+        type: Number,
+        required: true,
+      },
+      blocks: {
+        type: [Object],
+        required: true,
+      },
+      version: {
+        type: String,
+        required: true,
+      },
+    },
   },
   creator: {
     type: String,

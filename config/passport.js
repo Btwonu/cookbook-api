@@ -20,6 +20,7 @@ passport.deserializeUser((userId, done) => {
       const deserializedUser = {
         id: user._id,
         username: user.username,
+        favoriteRecipes: user.favoriteRecipes,
       };
 
       done(null, deserializedUser);
@@ -29,7 +30,7 @@ passport.deserializeUser((userId, done) => {
 
 function verifyCallback(username, password, done) {
   userService
-    .findOne(username)
+    .findByUsername(username)
     .then((user) => {
       if (!user) return done(null, false);
 

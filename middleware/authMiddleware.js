@@ -8,9 +8,15 @@ const isAuth = (req, res, next) => {
   }
 };
 
+const isRecipeCreator = (req, res, next) => {
+  console.log('from isRecipeCreator:', req.user);
+  next();
+};
+
 // const isAdmin = (req, res, next) => {};
 
 module.exports = {
   isAuth,
+  isRecipeCreator,
   // isAdmin,
 };

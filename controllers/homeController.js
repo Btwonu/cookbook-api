@@ -8,7 +8,10 @@ router.get('/', (req, res) => {
   } else {
     req.session.viewCount++;
   }
-  res.json({ home: true, viewCount: req.session.viewCount });
+
+  let user = req.user ? req.user.username : 'No one';
+
+  res.json({ home: true, viewCount: req.session.viewCount, user });
 });
 
 router.get('/about', (req, res) => {

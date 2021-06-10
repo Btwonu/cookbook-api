@@ -4,7 +4,7 @@ const getAll = async () => {
   return User.find({}).lean();
 };
 
-const findOne = async (username) => {
+const findByUsername = async (username) => {
   return User.findOne({ username }).lean();
 };
 
@@ -31,7 +31,7 @@ const create = async (username, email, salt, hash) => {
 
 module.exports = {
   getAll,
-  findOne,
+  findByUsername,
   findById,
   create,
   // updateOne,

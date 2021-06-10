@@ -24,12 +24,19 @@ const userSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  createdArticles: [
+  createdRecipes: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Article',
+      ref: 'Recipe',
     },
   ],
+  favoriteRecipes: [String],
+  // favoriteRecipes: [
+  //   {
+  //     type: mongoose.Schema.Types.ObjectId,
+  //     ref: 'Recipe',
+  //   },
+  // ],
 });
 
 const User = mongoose.model('User', userSchema);

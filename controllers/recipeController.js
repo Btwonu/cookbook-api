@@ -6,12 +6,11 @@ const recipeService = require('../services/recipeService');
 const userService = require('../services/userService');
 const { extractRecipePresentationData } = require('../utils/recipeUtils');
 
-const appError = require('../middleware/appError');
 const wrapAsync = require('../middleware/wrapAsync');
 
 const recipeSchema = require('../validation/recipeSchema');
 
-const { isAuth } = require('../middleware/authMiddleware');
+const { isAuth, isRecipeCreator } = require('../middleware/authMiddleware');
 
 router.get(
   '/',
@@ -26,13 +25,14 @@ router.get(
 router.post(
   '/',
   wrapAsync(async (req, res, next) => {
-    let { recipe } = req.body;
+    let editorData = req.body.recipe;
+
+    let presentationData = extractRecipePresentationData(editorData);
+
+    let recipeData = { editorData, ...presentationData };
+
     let { username } = await userService.findById(req.user.id);
-
-    let presentationData = extractRecipePresentationData(recipe);
-    recipe = { ...recipe, ...presentationData };
-
-    let data = await recipeService.createOne(recipe, username);
+    let data = await recipeService.createOne(recipeData, username);
 
     return res.json(data);
     // let newRecipe = await recipeSchema.validate(req.body);
@@ -48,12 +48,18 @@ router.get(
     let { recipeId } = req.params;
     let recipe = await recipeService.getOne(recipeId);
 
+    let { username } = req.user;
+    if (username === recipe.creator) {
+      recipe.isCreator = true;
+    }
+
     res.json(recipe);
   })
 );
 
 router.patch(
   '/:recipeId',
+  isRecipeCreator,
   wrapAsync(async (req, res, next) => {
     let { recipeId } = req.params;
     let updatedRecipe = await recipeSchema.validate(req.body);
