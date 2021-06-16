@@ -6,6 +6,7 @@ const errorHandler = require('./middleware/errorHandler');
 
 require('./config/express')(app);
 require('./config/db');
+require('dotenv').config();
 
 app.use(routes);
 
