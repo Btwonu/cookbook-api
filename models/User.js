@@ -37,6 +37,10 @@ const userSchema = mongoose.Schema({
       ref: 'Recipe',
     },
   ],
+  avatar: {
+    publicId: String,
+    url: String,
+  },
 });
 
 const User = mongoose.model('User', userSchema);

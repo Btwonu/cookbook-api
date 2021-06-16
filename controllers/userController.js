@@ -20,4 +20,17 @@ router.get(
   })
 );
 
+router.post(
+  '/:username/avatar',
+  wrapAsync(async (req, res) => {
+    const { userId, avatar } = req.body;
+
+    console.log({ userId, avatar });
+
+    await userService.updateAvatar(userId, avatar);
+
+    res.send('done');
+  })
+);
+
 module.exports = router;

@@ -32,6 +32,7 @@ passport.deserializeUser((userId, done) => {
         id: user._id,
         username: user.username,
         favoriteRecipes: filteredFavoriteRecipes,
+        avatar: user.avatar,
       };
 
       done(null, deserializedUser);
