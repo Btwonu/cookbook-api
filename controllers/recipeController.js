@@ -7,6 +7,7 @@ const userService = require('../services/userService');
 const { extractRecipePresentationData } = require('../utils/recipeUtils');
 
 const wrapAsync = require('../middleware/wrapAsync');
+const AppError = require('../middleware/AppError');
 
 const recipeSchema = require('../validation/recipeSchema');
 
@@ -70,9 +71,10 @@ router.patch(
   isRecipeCreator,
   wrapAsync(async (req, res, next) => {
     let { recipeId } = req.params;
-    let updatedRecipe = await recipeSchema.validate(req.body);
-
-    await recipeService.updateOne(recipeId, updatedRecipe);
+    console.log('I am inside patch recipe route');
+    // let updatedRecipe = await recipeSchema.validate(req.body);
+    let updatedRecipe = '';
+    // await recipeService.updateOne(recipeId, updatedRecipe);
     res.json({ patched: true, updatedRecipe });
   })
 );
@@ -81,6 +83,12 @@ router.delete(
   '/:recipeId',
   wrapAsync(async (req, res, next) => {
     let { recipeId } = req.params;
+    let recipe = await recipeService.getOne(recipeId);
+    let userId = req.user.id;
+
+    if (!recipe.creator.id.equals(userId)) {
+      next(new AppError('You are not authorized to do this!', 401));
+    }
 
     await recipeService.deleteOne(recipeId);
     res.json({ delete: true, recipeId });

@@ -39,7 +39,11 @@ const userSchema = mongoose.Schema({
   ],
   avatar: {
     publicId: String,
-    url: String,
+    url: {
+      type: String,
+      default:
+        'http://res.cloudinary.com/dvdmubcjl/image/upload/v1623779329/av-default-male_fekotj.svg',
+    },
   },
 });
 
