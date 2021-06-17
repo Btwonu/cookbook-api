@@ -25,20 +25,28 @@ router.get(
 router.post(
   '/',
   wrapAsync(async (req, res, next) => {
-    let editorData = req.body.recipe;
+    console.log(req.body.recipe);
+    const recipeEditorData = req.body.recipe;
+    const userId = req.user.id;
+    const { username } = req.user;
 
-    let presentationData = extractRecipePresentationData(editorData);
+    const recipePresentationData =
+      extractRecipePresentationData(recipeEditorData);
 
-    let recipeData = { editorData, ...presentationData };
+    const recipeData = {
+      editorData: recipeEditorData,
+      ...recipePresentationData,
+    };
 
-    let { username } = await userService.findById(req.user.id);
-    let data = await recipeService.createOne(recipeData, username);
+    const creator = { id: userId, username };
+    const createdRecipeData = await recipeService.createOne(
+      recipeData,
+      creator
+    );
 
-    return res.json(data);
-    // let newRecipe = await recipeSchema.validate(req.body);
-    // let data = await recipeService.createOne(newRecipe, 'Val');
+    await userService.addToCreatedRecipes(userId, createdRecipeData._id);
 
-    // res.json(data);
+    return res.json(createdRecipeData);
   })
 );
 
@@ -47,9 +55,9 @@ router.get(
   wrapAsync(async (req, res, next) => {
     let { recipeId } = req.params;
     let recipe = await recipeService.getOne(recipeId);
+    let userId = req.user.id;
 
-    let { username } = req.user;
-    if (username === recipe.creator) {
+    if (recipe.creator.id.equals(userId)) {
       recipe.isCreator = true;
     }
 

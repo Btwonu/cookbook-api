@@ -20,7 +20,13 @@ const create = async (username, email, salt, hash) => {
 const updateAvatar = async (userId, avatarData) => {
   let u = await User.findById(userId);
   u.avatar = avatarData;
-  return await u.save();
+  return u.save();
+};
+
+const addToCreatedRecipes = async (userId, recipeId) => {
+  let u = await User.findById(userId);
+  u.createdRecipes.push(recipeId);
+  return u.save();
 };
 
 // const updateOne = async (recipeId, data) => {
@@ -41,6 +47,7 @@ module.exports = {
   findById,
   create,
   updateAvatar,
+  addToCreatedRecipes,
   // updateOne,
   // deleteOne,
   // createOne,

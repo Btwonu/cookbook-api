@@ -62,7 +62,11 @@ const recipeSchema = mongoose.Schema({
     },
   },
   creator: {
-    type: String,
+    id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
+    username: String,
   },
   header: {
     type: String,
