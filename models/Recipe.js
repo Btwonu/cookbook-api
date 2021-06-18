@@ -77,6 +77,9 @@ const recipeSchema = mongoose.Schema({
   summary: {
     type: String,
   },
+  lastEdited: {
+    type: Date,
+  },
 });
 
 const Recipe = mongoose.model('Recipe', recipeSchema);

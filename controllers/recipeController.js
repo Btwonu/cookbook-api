@@ -71,10 +71,19 @@ router.patch(
   isRecipeCreator,
   wrapAsync(async (req, res, next) => {
     let { recipeId } = req.params;
-    console.log('I am inside patch recipe route');
-    // let updatedRecipe = await recipeSchema.validate(req.body);
-    let updatedRecipe = '';
-    // await recipeService.updateOne(recipeId, updatedRecipe);
+    const recipeEditorData = req.body.recipe;
+
+    const recipePresentationData =
+      extractRecipePresentationData(recipeEditorData);
+
+    const recipeData = {
+      editorData: recipeEditorData,
+      ...recipePresentationData,
+      lastEdited: Date.now(),
+    };
+
+    let updatedRecipe = recipeService.updateOne(recipeId, recipeData);
+
     res.json({ patched: true, updatedRecipe });
   })
 );

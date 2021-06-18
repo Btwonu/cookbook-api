@@ -1,4 +1,5 @@
 const Recipe = require('../models/Recipe');
+const AppError = require('../middleware/AppError');
 
 const createOne = (data, creator) => {
   const recipe = new Recipe({ ...data, creator });
@@ -11,7 +12,13 @@ const getAll = async () => {
 };
 
 const getOne = async (recipeId) => {
-  return Recipe.findById(recipeId).lean();
+  let recipe = await Recipe.findById(recipeId).lean();
+
+  if (!recipe) {
+    throw new AppError('Recipe not found', 404);
+  }
+
+  return recipe;
 };
 
 const updateOne = async (recipeId, data) => {
