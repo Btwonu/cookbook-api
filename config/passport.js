@@ -1,8 +1,6 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-// const User = require('../models/User');
 const userService = require('../services/userService');
-const favoriteService = require('../services/favoriteService');
 const { validatePassword } = require('../utils/passwordUtils');
 
 const strategy = new LocalStrategy(verifyCallback);
@@ -17,12 +15,16 @@ passport.deserializeUser((userId, done) => {
   userService
     .findById(userId)
     .then(async (user) => {
-      let favoriteRecipes = await favoriteService.getUserFavorites(
-        user.username
-      );
+      let favoriteRecipes = await userService.getFavoriteRecipes(userId);
+      let createdRecipes = await userService.getCreatedRecipes(userId);
 
-      // filter out unneeded data before passing favoriteRecipes to user
+      // filter out unneeded data before passing it to user
       let filteredFavoriteRecipes = favoriteRecipes.map((recipe) => ({
+        _id: recipe._id,
+        title: recipe.header,
+      }));
+
+      let filteredCreatedRecipes = createdRecipes.map((recipe) => ({
         _id: recipe._id,
         title: recipe.header,
       }));
@@ -32,6 +34,7 @@ passport.deserializeUser((userId, done) => {
         id: user._id,
         username: user.username,
         favoriteRecipes: filteredFavoriteRecipes,
+        createdRecipes: filteredCreatedRecipes,
         avatar: user.avatar,
       };
 
