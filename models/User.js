@@ -38,7 +38,10 @@ const userSchema = mongoose.Schema({
     },
   ],
   avatar: {
-    publicId: String,
+    publicId: {
+      type: String,
+      default: 'av-default-male_fekotj',
+    },
     url: {
       type: String,
       default:
