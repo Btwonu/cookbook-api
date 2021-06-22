@@ -48,6 +48,14 @@ const addToFavoriteRecipes = async (userId, recipe) => {
   return u.save();
 };
 
+const addShoppingList = async (userId, shoppingList) => {
+  const u = await User.findById(userId);
+
+  u.shoppingList = shoppingList;
+  await u.save();
+  return;
+};
+
 const removeFavoriteRecipe = async (userId, recipe) => {
   const u = await User.findById(userId);
 
@@ -96,8 +104,5 @@ module.exports = {
   removeFavoriteRecipe,
   getCreatedRecipes,
   addToFavoriteRecipes,
-  // updateOne,
-  // deleteOne,
-  // createOne,
-  // getFiltered,
+  addShoppingList,
 };
