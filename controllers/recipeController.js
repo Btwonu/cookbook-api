@@ -35,14 +35,13 @@ router.post(
       extractRecipePresentationData(recipeEditorData);
 
     const recipeData = {
+      creator: { id: userId, username },
       editorData: recipeEditorData,
       ...recipePresentationData,
     };
 
-    const creator = { id: userId, username };
     const createdRecipeData = await recipeService.createOne(
-      recipeData,
-      creator
+      recipeData
     );
 
     await userService.addToCreatedRecipes(userId, createdRecipeData._id);

@@ -6,6 +6,7 @@ const authController = require('./controllers/authController');
 const userController = require('./controllers/userController');
 const favoriteController = require('./controllers/favoriteController');
 const imageController = require('./controllers/imageController');
+const shoppingController = require('./controllers/shoppingController');
 
 const router = Router();
 
@@ -15,5 +16,6 @@ router.use('/recipes', recipeController);
 router.use('/users', userController);
 router.use('/favorites', favoriteController);
 router.use('/images', imageController);
+router.use('/shopping', shoppingController);
 
 module.exports = router;

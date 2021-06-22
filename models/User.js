@@ -37,6 +37,19 @@ const userSchema = mongoose.Schema({
       ref: 'Recipe',
     },
   ],
+  shoppingList: {
+    products: [
+      {
+        id: String,
+        name: String,
+        completed: Boolean,
+      }
+    ],
+    lastEdited: {
+      type: Date,
+      default: Date.now(),
+    },
+  },
   avatar: {
     publicId: {
       type: String,
