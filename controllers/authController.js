@@ -6,7 +6,7 @@ const router = Router();
 const userService = require('../services/userService');
 const { generatePassword } = require('../utils/passwordUtils');
 const { isAuth } = require('../middleware/authMiddleware');
-const AppError = require('../middleware/AppError');
+const AppError = require('../middleware/appError');
 const wrapAsync = require('../middleware/wrapAsync');
 
 router.get('/', (req, res, next) => {

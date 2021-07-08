@@ -1,5 +1,5 @@
 const Recipe = require('../models/Recipe');
-const AppError = require('../middleware/AppError');
+const AppError = require('../middleware/appError');
 
 const createOne = (data) => {
   const recipe = new Recipe(data);

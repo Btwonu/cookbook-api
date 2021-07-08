@@ -7,7 +7,7 @@ const userService = require('../services/userService');
 const { extractRecipePresentationData } = require('../utils/recipeUtils');
 
 const wrapAsync = require('../middleware/wrapAsync');
-const AppError = require('../middleware/AppError');
+const AppError = require('../middleware/appError');
 
 const recipeSchema = require('../validation/recipeSchema');
 
@@ -40,9 +40,7 @@ router.post(
       ...recipePresentationData,
     };
 
-    const createdRecipeData = await recipeService.createOne(
-      recipeData
-    );
+    const createdRecipeData = await recipeService.createOne(recipeData);
 
     await userService.addToCreatedRecipes(userId, createdRecipeData._id);
 

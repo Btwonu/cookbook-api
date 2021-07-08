@@ -1,5 +1,5 @@
 const recipeService = require('../services/recipeService');
-const AppError = require('./AppError');
+const AppError = require('./appError');
 const wrapAsync = require('./wrapAsync');
 
 const isAuth = (req, res, next) => {
