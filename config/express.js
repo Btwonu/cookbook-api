@@ -28,6 +28,7 @@ module.exports = (app) => {
         httpOnly: true,
         maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
         sameSite: 'none',
+        secure: true,
       },
       store: MongoDbStore.create({ mongoUrl: DB.uri }),
     })
