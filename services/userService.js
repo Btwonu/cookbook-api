@@ -56,6 +56,12 @@ const addShoppingList = async (userId, shoppingList) => {
   return;
 };
 
+const getShoppingList = async (userId) => {
+  const u = await User.findById(userId);
+
+  return u.shoppingList;
+};
+
 const removeFavoriteRecipe = async (userId, recipe) => {
   const u = await User.findById(userId);
 
@@ -105,4 +111,5 @@ module.exports = {
   getCreatedRecipes,
   addToFavoriteRecipes,
   addShoppingList,
+  getShoppingList,
 };

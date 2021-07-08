@@ -17,6 +17,7 @@ passport.deserializeUser((userId, done) => {
     .then(async (user) => {
       let favoriteRecipes = await userService.getFavoriteRecipes(userId);
       let createdRecipes = await userService.getCreatedRecipes(userId);
+      let shoppingList = await userService.getShoppingList(userId);
 
       // filter out unneeded data before passing it to user
       let filteredFavoriteRecipes = favoriteRecipes.map((recipe) => ({
@@ -36,6 +37,7 @@ passport.deserializeUser((userId, done) => {
         favoriteRecipes: filteredFavoriteRecipes,
         createdRecipes: filteredCreatedRecipes,
         avatar: user.avatar,
+        shoppingList,
       };
 
       done(null, deserializedUser);
