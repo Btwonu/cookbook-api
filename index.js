@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const config = require('./config');
 const routes = require('./routes');
@@ -6,7 +7,6 @@ const errorHandler = require('./middleware/errorHandler');
 
 require('./config/express')(app);
 require('./config/db');
-require('dotenv').config();
 
 app.use(routes);
 

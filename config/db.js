@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
 const { DB } = require('../config');
 
-console.log('URI', DB.uri);
-
 module.exports = mongoose
   .connect(DB.uri, DB.options)
   .then((res) => {
