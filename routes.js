@@ -10,12 +10,12 @@ const shoppingController = require('./controllers/shoppingController');
 
 const router = Router();
 
-router.use('/', homeController);
-router.use('/auth', authController);
-router.use('/recipes', recipeController);
-router.use('/users', userController);
-router.use('/favorites', favoriteController);
-router.use('/images', imageController);
-router.use('/shopping', shoppingController);
+router.use('/api/', homeController);
+router.use('/api/auth', authController);
+router.use('/api/recipes', recipeController);
+router.use('/api/users', userController);
+router.use('/api/favorites', favoriteController);
+router.use('/api/images', imageController);
+router.use('/api/shopping', shoppingController);
 
 module.exports = router;
