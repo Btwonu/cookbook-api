@@ -40,7 +40,7 @@ router.post(
     console.log(`User created successfully: ${user}`);
     req.login(user, (err) => {
       if (err) throw err;
-      res.redirect('/');
+      res.redirect('/api');
     });
   })
 );
@@ -55,7 +55,7 @@ router.post(
 
 router.get('/logout', (req, res) => {
   req.logout();
-  res.redirect('/');
+  res.redirect('/api');
 });
 
 module.exports = router;
