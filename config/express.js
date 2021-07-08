@@ -11,7 +11,7 @@ require('./passport');
 module.exports = (app) => {
   app.use(
     cors({
-      origin: 'https://frosty-mayer-b34023.netlify.app',
+      origin: '*',
       credentials: true,
     })
   );
