@@ -4,14 +4,17 @@ const morgan = require('morgan');
 const session = require('express-session');
 const MongoDbStore = require('connect-mongo');
 const passport = require('passport');
-const { DB } = require('../config');
+const { DB, cookie } = require('../config');
 
 require('./passport');
 
 module.exports = (app) => {
   app.use(
     cors({
-      origin: 'https://frosty-mayer-b34023.netlify.app',
+      origin: [
+        'https://frosty-mayer-b34023.netlify.app',
+        'http://localhost:3000',
+      ],
       credentials: true,
     })
   );
@@ -31,12 +34,7 @@ module.exports = (app) => {
       secret: 'my-secret',
       resave: false,
       saveUninitialized: true,
-      cookie: {
-        httpOnly: true,
-        maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
-        sameSite: 'none',
-        secure: true,
-      },
+      cookie,
       store: MongoDbStore.create({ mongoUrl: DB.uri }),
     })
   );
